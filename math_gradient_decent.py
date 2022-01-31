@@ -43,8 +43,18 @@ def picMSE(m,dataset,i):
     return mse**2
     
 MSEList=[]
-for every in range(50,-15,-1):
-    MSEList.append(picMSE(every/50,dataset,every))
-    
+i=0
+for every in range(10,-3,-1):
+    MSEList.append(picMSE(every/10,dataset,i))
+    plt.show()    
+    i+=1
 
 plt.plot(MSEList)
+
+
+
+import imageio
+images = []
+for filename in filenames:
+    images.append(imageio.imread(filename))
+imageio.mimsave('MSE.gif', images)
