@@ -7,17 +7,44 @@ Created on Mon Jan 31 08:59:32 2022
 import matplotlib.pyplot as plt
 import numpy as np
 
-dataset=np.array([[2,1.5,0],[4,4,0],[8.3,3.5,0]])
+dataset=np.array([[2,1,0],[4,4,0],[8,3,0]])
 
-# plot data
-for i in range(len(dataset)):
-    point=dataset[i]
-    color="r"           #erst alles rot
-    if point[2]== 0:    #nur 0 wird blau    
-        color ="b"
-    plt.scatter(point[0],point[1],c=color)
-    plt.grid()
-plt.ylim(0,10)
-plt.xlim(0,10)
+def draw_dots(dataset):# plot data
+    for i in range(len(dataset)):
+        point=dataset[i]
+        color="r"           #erst alles rot
+        if point[2]== 0:    #nur 0 wird blau    
+            color ="b"
+        plt.scatter(point[0],point[1],c=color)
+        plt.grid()
+    plt.ylim(0,10)
+    plt.xlim(0,10)
+
+def picMSE(m,dataset,i):    
     
-plt.show()
+    #Y=mx+b
+    b=1
+    
+    x1_2 = [0, 10]
+    y1_2 =  [b+m*x1_2[0], b+m*x1_2[1]]
+    plt.plot(x1_2, y1_2,  c="black")
+    mse=0 
+    for each in range(len(dataset)):
+        x1 = [dataset[each][0], dataset[each][0]]
+        y1 = [dataset[each][1], b+m*dataset[each][0]]
+        plt.plot(x1, y1,  c="red")
+        mse+=y1[0] - y1[1]
+    
+#    print(mse**2) 
+    plt.text(2.2, 9, "MSE {:.1f}".format(mse**2))
+    draw_dots(dataset)
+    plt.savefig("MSE_"+str(i)+".png")
+    #plt.show()
+    return mse**2
+    
+MSEList=[]
+for every in range(50,-15,-1):
+    MSEList.append(picMSE(every/50,dataset,every))
+    
+
+plt.plot(MSEList)
